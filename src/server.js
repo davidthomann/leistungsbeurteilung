@@ -9,6 +9,7 @@ const port = 3001;
 const router = require('./endpoints');
 const routerauth = require('./auth');
 
+// Add swagger ui
 app.use('/swagger-ui/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/swagger-ui', (request, response) => {

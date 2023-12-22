@@ -9,10 +9,11 @@ router.use(express.json());
 // Array with all the tasks
 let tasks = [
   {
-    isbn: '123', title: 'Make a Task', author: 'David Thomann', created_at: '22.12.2023', closed_at: 'Not closed yet',
+    isbn: '1', title: 'Make a Task', author: 'David Thomann', created_at: '22.12.2023', closed_at: 'Not closed yet',
   },
 ];
 
+// function to check if the user is logged in
 function isAuth(require, response, next) {
   if (require.session.email) {
     next();
@@ -43,24 +44,37 @@ router.post('/', isAuth, (request, response) => {
 // Endpoint, which returns a single task
 router.get('/:isbn', isAuth, (request, response) => {
   //  #swagger.tags = ['Tasks']
-  response.send(tasks.find((task) => task.isbn === request.params.isbn));
+  if (tasks.some((task) => task.isbn === request.params.id)) {
+    return response.status(200).json(tasks.find((task) => task.isbn === request.params.id));
+  }
+  return response.status(404).json({ error: 'Error 404 Task was not found' });
 });
 
 // endpoint, which modifies the existing task and returns it.
 router.patch('/:isbn', isAuth, (request, response) => {
   //  #swagger.tags = ['Tasks']
-  const oldTask = tasks.find((task) => task.isbn === request.params.isbn);
-  const keys = Object.keys(request.body);
-  keys.forEach((key) => { oldTask[key] = request.body[key]; });
-  tasks = tasks.map((task) => (task.isbn === request.params.isbn ? oldTask : task));
-  response.send(tasks);
+  if (tasks.some((task) => task.isbn === request.params.id)) {
+    const oldTask = tasks.find((task) => task.isbn === request.params.isbn);
+    const keys = Object.keys(request.body);
+    keys.forEach((key) => { oldTask[key] = request.body[key]; });
+    tasks = tasks.map((task) => (task.isbn === request.params.isbn ? oldTask : task));
+    response.send(tasks);
+    return response.status(200).json(tasks.find((task) => task.isbn === request.params.id));
+  }
+  return response.status(404).json({ error: 'Error 404 Task was not found' });
 });
 
 // Endpoint that deletes the existing task
 router.delete('/:isbn', (request, response) => {
   //  #swagger.tags = ['Tasks']
-  tasks = tasks.filter((task) => task.isbn !== request.params.isbn);
-  response.send(tasks);
+
+  if (tasks.some((task) => task.isbn === request.params.id)) {
+    tasks = tasks.filter((task) => task.isbn !== request.params.isbn);
+    response.send(tasks);
+    return response.status(200).json(tasks.find((task) => task.isbn === request.params.id));
+  }
+  return response.status(404).json({ error: 'Error 404 Task was not found' });
 });
 
+// export de router
 module.exports = router;
