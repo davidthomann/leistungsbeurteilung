@@ -13,13 +13,20 @@ let tasks = [
   },
 ];
 
+function isAuth(require, response, next) {
+  if (require.session.email) {
+    next();
+  }
+  return response.statusCode(402);
+}
+
 // Endpoint, which returns a list of all tasks
-router.get('/tasks', (request, response) => {
-  response.statusCode(200).send(tasks);
+router.get('/', isAuth, (request, response) => {
+  response.send(tasks);
 });
 
 // Endpoint that creates a new task and returns it
-router.post('/tasks/', (request, response) => {
+router.post('/', isAuth, (request, response) => {
   const newTask = {
     isbn: crypto.randomUUID(),
     title: request.body.title,
@@ -28,16 +35,16 @@ router.post('/tasks/', (request, response) => {
     closed_at: request.body.closed_at,
   };
   tasks.push(newTask);
-  response.statusCode(200).send(newTask);
+  response.send(newTask);
 });
 
 // Endpoint, which returns a single task
-router.get('/tasks/:isbn', (request, response) => {
+router.get('/:isbn', isAuth, (request, response) => {
   response.send(tasks.find((task) => task.isbn === request.params.isbn));
 });
 
 // endpoint, which modifies the existing task and returns it.
-router.patch('/tasks/:isbn', (request, response) => {
+router.patch('/:isbn', isAuth, (request, response) => {
   const oldTask = tasks.find((task) => task.isbn === request.params.isbn);
   const keys = Object.keys(request.body);
   keys.forEach((key) => { oldTask[key] = request.body[key]; });
@@ -46,7 +53,7 @@ router.patch('/tasks/:isbn', (request, response) => {
 });
 
 // Endpoint that deletes the existing task
-router.delete('/tasks/:isbn', (request, response) => {
+router.delete('/:isbn', (request, response) => {
   tasks = tasks.filter((task) => task.isbn !== request.params.isbn);
   response.send(tasks);
 });
