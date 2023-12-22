@@ -1,11 +1,20 @@
 const express = require('express');
 const session = require('express-session');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
 
 const app = express();
 const port = 3001;
 
 const router = require('./endpoints');
 const routerauth = require('./auth');
+
+app.use('/swagger-ui/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.get('/swagger-ui', (request, response) => {
+  // #swagger.tags = ['swagger-ui']
+  response.sendFile(`${__dirname}/swagger-output.json`);
+});
 
 app.use(
   session({

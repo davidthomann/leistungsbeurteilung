@@ -9,6 +9,7 @@ const loginData = { email: 'project@testdata.ch', password: 'm295' };
 
 // Endpoint for the login process
 routerauth.post('/login', (request, response) => {
+  //  #swagger.tags = ['Authetification']
   const { email, password } = request.body;
 
   if (password === loginData.password) {
@@ -20,6 +21,7 @@ routerauth.post('/login', (request, response) => {
 
 // Endpoint for the verify process
 routerauth.get('/verify', (request, response) => {
+  //  #swagger.tags = ['Authetification']
   if (request.session.email) {
     return response.status(200).json({ email: request.session.email });
   }
@@ -28,6 +30,7 @@ routerauth.get('/verify', (request, response) => {
 
 // Endpoint for the logout process
 routerauth.delete('/logout', (request, response) => {
+  //  #swagger.tags = ['Authetification']
   if (request.session.email) {
     request.session.email = null;
 

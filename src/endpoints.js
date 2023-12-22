@@ -22,11 +22,13 @@ function isAuth(require, response, next) {
 
 // Endpoint, which returns a list of all tasks
 router.get('/', isAuth, (request, response) => {
+  //  #swagger.tags = ['Tasks']
   response.send(tasks);
 });
 
 // Endpoint that creates a new task and returns it
 router.post('/', isAuth, (request, response) => {
+  //  #swagger.tags = ['Tasks']
   const newTask = {
     isbn: crypto.randomUUID(),
     title: request.body.title,
@@ -40,11 +42,13 @@ router.post('/', isAuth, (request, response) => {
 
 // Endpoint, which returns a single task
 router.get('/:isbn', isAuth, (request, response) => {
+  //  #swagger.tags = ['Tasks']
   response.send(tasks.find((task) => task.isbn === request.params.isbn));
 });
 
 // endpoint, which modifies the existing task and returns it.
 router.patch('/:isbn', isAuth, (request, response) => {
+  //  #swagger.tags = ['Tasks']
   const oldTask = tasks.find((task) => task.isbn === request.params.isbn);
   const keys = Object.keys(request.body);
   keys.forEach((key) => { oldTask[key] = request.body[key]; });
@@ -54,6 +58,7 @@ router.patch('/:isbn', isAuth, (request, response) => {
 
 // Endpoint that deletes the existing task
 router.delete('/:isbn', (request, response) => {
+  //  #swagger.tags = ['Tasks']
   tasks = tasks.filter((task) => task.isbn !== request.params.isbn);
   response.send(tasks);
 });
