@@ -15,8 +15,7 @@ let tasks = [
 
 // Endpoint, which returns a list of all tasks
 router.get('/tasks', (request, response) => {
-  response.send(tasks);
-  response.status(200).send('successfully worked');
+  response.statusCode(200).send(tasks);
 });
 
 // Endpoint that creates a new task and returns it
@@ -29,8 +28,7 @@ router.post('/tasks/', (request, response) => {
     closed_at: request.body.closed_at,
   };
   tasks.push(newTask);
-  response.send(newTask);
-  response.status(200).send('successfully added');
+  response.statusCode(200).send(newTask);
 });
 
 // Endpoint, which returns a single task
