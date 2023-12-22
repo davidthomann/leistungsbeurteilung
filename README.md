@@ -1,47 +1,24 @@
-# Description
+# M295 Leistungsbeurteilung B
+## Description
+With this project you can create, edit and delete tasks. Also there is a small login system.
+## Setup:
+For this project you need Docker and Postman. You need a NodeJS & JavaScript Container and the Postman Desktop version.
+## Start:
+1. Write the command "npm run dev"
+2. Now you can open "localhost:3001/tasks"
+   
+## Functions
+1. GET /tasks Endpoint, which returns a list of all tasks
+2. POST /tasks Endpoint, which creates a new task and returns it
+3. GET /task/{id} endpoint, which returns a single task
+4. PUT /task/{id} endpoint, which changes the existing task and returns it 
+5. DELETE /task/{id} endpoint, which deletes the existing task
 
-This is a small program for the M295. In this program you can add, delete oder edit tasks with Postman.
-For this project i used NodeJS and Express.
+There is also a small login system:
 
-## Installation
-
-To start the project you need this command:
-
-```bash
-npm run dev
-```
-
-## Commands
-
-To see all tasks:
-```bash
-GET localhost:3001/tasks
-```
-To add a task
-```bash
-POST localhost:3001/tasks/{id}
-```
-To edit a task
-```bash
-PATCH localhost:3001/tasks/{id}
-```
-To delete a task:
-```bash
-DELETE localhost:3001/tasks/{id}
-```
-To Login use:
-```bash
-POST localhost:3001/login
-```
-To verify use:
-```bash
-GET localhost:3001/verify
-```
-To logout use:
-```bash
-DELETE localhost:3001/logout
-```
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
+6. POST /login endpoint, which receives the credentials, checks them and returns a token or cookie. 
+7 GET /verify Endpoint, which checks a token or cookie for validity and returns the result.
+8. DELETE /logout Endpoint, which marks the token or cookie provided as invalid
+   
+## Author
+-[David Thomann]https://github.com/davidthomannn
