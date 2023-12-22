@@ -8,30 +8,39 @@ For this project i used NodeJS and Express.
 To start the project you need this command:
 
 ```bash
-
+npm run dev
 ```
 
-## Usage
+## Commands
 
-```python
-import foobar
-
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
+To see all tasks:
+```bash
+GET localhost:3001/tasks
 ```
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
+To add a task
+```bash
+POST localhost:3001/tasks/{id}
+```
+To edit a task
+```bash
+PATCH localhost:3001/tasks/{id}
+```
+To delete a task:
+```bash
+DELETE localhost:3001/tasks/{id}
+```
+To Login use:
+```bash
+POST localhost:3001/login
+```
+To verify use:
+```bash
+GET localhost:3001/verify
+```
+To logout use:
+```bash
+DELETE localhost:3001/logout
+```
 
 ## License
 
